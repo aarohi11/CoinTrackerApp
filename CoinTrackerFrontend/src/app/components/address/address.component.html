@@ -1,0 +1,119 @@
+<img src="./assets/images/bitcoin-logo.jpg" style="margin-left: 450px;height: 400px;"/>
+
+<div class="container" style="margin-top:0px; margin-left: 470px;">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+  <!-- Address len input -->
+  <div class="form-outline mb-4">
+    <input id="addresslen" formControlName="addressLen" type="text" class="form-control" placeholder="Enter address length" name="addresslen" [ngClass]="{ 'is-invalid': submitted && f.addressLen.errors }">
+      <div *ngIf="submitted && f.addressLen.errors" class="invalid-feedback">
+        <div *ngIf="f.addressLen.errors.required">Address Length is required</div>
+    </div>
+  </div>
+
+  <!-- Initial Balance input -->
+  <div class="form-outline mb-4">
+    <input id="balance" formControlName="balance" type="number" [(ngModel)]="address.balance" class="form-control" placeholder="Enter address balance" name="balance" [ngClass]="{ 'is-invalid': submitted && f.balance.errors }" min="0">
+      <div *ngIf="submitted && f.balance.errors" class="invalid-feedback">
+        <div *ngIf="f.balance.errors.required">Balance is required</div>
+    </div>
+  </div>
+
+  <!-- Submit button -->
+  <button type="submit" class="btn btn-success btn-block">Generate New Address</button>
+</form>
+</div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+  <table class="table table-striped">
+    <tr style="text-align: center;">
+        <th>ID</th>
+        <th>Address Hex</th>
+        <th></th>
+    </tr>
+    <tr *ngFor="let address of addresses" style="text-align: center;">
+        <td *ngIf = "address.archiveStatus ===1">{{address.id}}</td>
+
+        <td *ngIf = "address.archiveStatus ===1">
+
+        <a href="javascript:void(0)" class="link-primary" (click)="viewaddress(address)">{{address.addressHex}}</a>
+        
+      </td>
+        <td *ngIf = "address.archiveStatus ===1">
+          <div style="width:100px;">
+            <div style="float: left; width: 50px;"> 
+        <button type="button"
+            class="btn custom-width" style="background-color: #fff;color:red"(click)="deleteAddress(address.addressHex)"><i class="fa fa-trash" style="font-size:20px" ></i></button>
+            </div>
+            <div style="float: right; width: 50px">  
+            <button type="button"
+            class="btn custom-width" style="background-color:#fff;color:#FFA500
+            ;" (click)="open(transact, address)"><i class="fa fa-dollar" style="font-size:20px"></i></button>
+            </div>
+        </div>
+        </td>  
+    </tr>
+</table>
+</div>
+</div>
+</div>
+
+<ng-template #transact let-modal>
+      
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Send Money</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmitTransaction()">
+        <div class="form-group">
+          <label for="recieverAddress">Reciever Address</label>
+          <input id="recieverAddress" formControlName="recieverAddress" [(ngModel)]="transaction.recieverAddress" type="text" class="form-control" [ngClass]="{ 'is-invalid': submittedTranscation && g.recieverAddress.errors }">
+          <div *ngIf="submittedTranscation && g.recieverAddress.errors" class="invalid-feedback">
+            <div *ngIf="g.recieverAddress.errors.required">Reciever Address is required</div>
+        </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="amountSent">Amount to Send:</label>
+          <input id="amountSent" formControlName="amountSent" [(ngModel)]="transaction.amountSent" type="number" min="0" class="form-control" [ngClass]="{ 'is-invalid': submittedTranscation && g.amountSent.errors }">
+          <div *ngIf="submittedTranscation && g.amountSent.errors" class="invalid-feedback">
+            <div *ngIf="g.amountSent.errors.required">Sending Amount is required</div>
+        </div>
+        </div>
+        <div class="form-group">
+          <label for="transactionFee">Transaction Fee:</label>
+          <input id="transactionFee" formControlName="transactionFee" [(ngModel)]="transaction.transactionFee" type="number" min="0" class="form-control" [ngClass]="{ 'is-invalid': submittedTranscation && g.transactionFee.errors }">
+          <div *ngIf="submittedTranscation && g.transactionFee.errors" class="invalid-feedback">
+            <div *ngIf="g.transactionFee.errors.required">Transaction Fee is required</div>
+        </div>
+        </div>
+        <p class="alert alert-success" *ngIf="submitsuccessful">
+          <strong>Transaction completed successfully!!
+            <i style="margin-left: 145px;"class="fa fa-check" aria-hidden="true"></i>
+          </strong>
+      </p>
+      <p class="alert alert-danger" *ngIf="submitfailed">
+        <strong>Insufficient Balance to make transaction!!
+          <i style="margin-left: 200px;"class="fa fa-times" aria-hidden="true"></i>
+        </strong>
+    </p>
+       </form>
+        </div>
+  </div>
+  <div class="modal-footer">
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmitTransaction()">
+    <button type="submit" class="btn btn-success" style="color: #fff;
+    font-weight: 600;">SEND</button>&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" class="btn" aria-label="Close" (click)="modal.dismiss('Cross click')" style="background-color:#999999
+    ;color: #fff;
+    font-weight: 600;">CLOSE
+    </button>
+      </form>
+  </div>
+</ng-template>
