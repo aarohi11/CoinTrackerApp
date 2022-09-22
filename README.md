@@ -1,9 +1,4 @@
-# CoinTrackerApp
-TakeHome Exam for CoinTracker
-
-# Reference Documentation for project
-
-# How to run the project
+# Reference Documentation for running the project
 
 ## Backend Configuration
    - The project runs with Tomcat version 8.5.0, which can be installed from https://tomcat.apache.org/tomcat-8.5-doc/index.html.
