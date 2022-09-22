@@ -1,0 +1,50 @@
+<div id="content">
+    <div class="card mb-3">
+      <div class="row no-gutters">
+        <div class="col-md-4">
+          <br>
+          <!-- <i class="fa fa-building" aria-hidden="true" style="margin-left: 120px;margin-top:50px;font-size: 150px;"></i> -->
+         <img src="./assets/images/qr-code.png" style="height: 150px;width:150px; margin-left: 200px;" class="card-img" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h2 class="card-title">Address: {{address.addressHex}}</h2>
+            <p class="card-text"> 
+              <strong>Transactions: </strong> {{transactions.length}}<br>
+              <strong>Total Recieved: </strong> {{address.amountRecieved}}<br>
+              <strong>Total Sent: </strong> {{address.amountSent}}<br>
+              <strong>Balance: </strong> {{address.balance}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+        <h2 style="text-align: center;">Transaction List</h2><br>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+            <table class="table table-striped table-responsive">
+              <tr style="text-align: center;">
+                  <th>ID</th>
+                  <th>Transaction Hex</th>
+                  <th>Sender Address</th>
+                  <th>Reciever Address</th>
+                  <th>Transaction Amount</th>
+                  <th>Transaction Fee</th>
+                  <th>Transaction Date</th>
+              </tr>
+              <tr *ngFor="let transaction of transactions" style="text-align: center;">
+                  <td *ngIf = "transaction.archiveStatus ===1">{{transaction.id}}</td>
+                  <td *ngIf = "transaction.archiveStatus ===1">{{transaction.transactionHex}}</td>
+                  <td *ngIf = "transaction.archiveStatus ===1">
+                    {{transaction.senderAddress}}</td>
+                  <td *ngIf = "transaction.archiveStatus ===1">
+                    {{transaction.recieverAddress}}</td>
+                  <td *ngIf = "transaction.archiveStatus ===1">{{transaction.amountSent}}</td>
+                  <td *ngIf = "transaction.archiveStatus ===1">{{transaction.transactionFee}}</td>
+                  <td *ngIf = "transaction.archiveStatus ===1">{{transaction.transactionDate}}</td> 
+              </tr> 
+          </table>
+          </div>
+          </div>
+    </div>
+</div>
